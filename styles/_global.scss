@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap");
+
 html {
     box-sizing: border-box;
 }
@@ -14,11 +16,12 @@ body {
     flex-flow: column nowrap;
     align-items: center;
     height: 100vh;
-
     background: $background-gradient;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: 600;
 }
 
 i {
     font-size: 8em;
-    color: #f00;
+    color: $ScoreBg;
 }

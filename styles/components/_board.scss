@@ -3,7 +3,7 @@
     flex-direction: column;
     width: $board-size;
     height: $board-size;
-    border: 1px solid #ff0;
+    border: $border-width solid $HeaderOutline;
     border-radius: 5px;
 }
 
@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: row;
     &:not(:last-child) {
-        border-bottom: 1px solid #f00;
+        border-bottom: $border-width solid $HeaderOutline;
     }
 }
 
@@ -24,6 +24,6 @@
     align-items: center;
 
     &:not(:last-child) {
-        border-right: 1px solid #f00;
+        border-right: $border-width solid $HeaderOutline;
     }
 }

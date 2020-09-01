@@ -1,9 +1,14 @@
 $board-size: 34vw;
-$score-board-color: #f00;
-$score-board-font-color: #f00;
-$border-color: #f00;
-$icon-color: #f00;
-$footer-color: #f00;
+$border-width: 0.1em;
+$border-radius: 5px;
+// Neutral
+
+$DarkText: hsl(229, 25%, 31%);
+$ScoreText: hsl(229, 64%, 46%);
+$HeaderOutline: hsl(217, 16%, 45%);
+$ScoreBg: #f3f4f5;
+
+$Shadow: hsl(217, 16%, 90%);
 
 $background-gradient: radial-gradient(
     ellipse at top,

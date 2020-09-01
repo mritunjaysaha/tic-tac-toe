@@ -1,5 +1,6 @@
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 /* fallback for old browsers */
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap");
 html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -26,11 +27,13 @@ body {
           align-items: center;
   height: 100vh;
   background: radial-gradient(ellipse at top, #2c5364, #203a43, #0f2027);
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-weight: 600;
 }
 
 i {
   font-size: 8em;
-  color: #f00;
+  color: #f3f4f5;
 }
 
 .header-score-container {
@@ -42,15 +45,45 @@ i {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 1em;
+  border: 2px solid #606e85;
+  padding: 1em;
+  border-radius: 5px;
+  margin: 4vh 0;
 }
 
 .header-score-container article {
+  background: #f3f4f5;
   text-align: center;
-  padding: 1em 2em;
+  padding: 1em 0;
+  width: 8em;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.header-score-container article h3 {
+.header-score-container article .score-text-player {
   text-transform: uppercase;
+  color: #2a46c0;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin: 0;
+}
+
+.header-score-container article .score {
+  font-size: 2em;
+  font-weight: 700;
+  color: #3b4363;
+  margin: 0;
 }
 
 .section-board-container {
@@ -63,7 +96,7 @@ i {
           flex-direction: column;
   width: 34vw;
   height: 34vw;
-  border: 1px solid #ff0;
+  border: 0.1em solid #606e85;
   border-radius: 5px;
 }
 
@@ -81,7 +114,7 @@ i {
 }
 
 .div-board-rows:not(:last-child) {
-  border-bottom: 1px solid #f00;
+  border-bottom: 0.1em solid #606e85;
 }
 
 .div-board-cols {
@@ -104,7 +137,7 @@ i {
 }
 
 .div-board-cols:not(:last-child) {
-  border-right: 1px solid #f00;
+  border-right: 0.1em solid #606e85;
 }
 
 .footer {
@@ -112,7 +145,7 @@ i {
   bottom: 0;
   width: 100vw;
   height: 5vh;
-  background: #f00;
+  background: #16161d;
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -123,6 +156,7 @@ i {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  color: #fafafa;
 }
 
 .footer p {
@@ -131,6 +165,7 @@ i {
 }
 
 .footer p a {
+  color: #2a46c0;
   text-decoration: none;
 }
 /*# sourceMappingURL=main.css.map */
