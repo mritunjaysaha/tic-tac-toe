@@ -7,14 +7,14 @@ class Board {
         this.emptyCell = 9;
 
         this.winningCombinations = [
-            JSON.stringify(["00", "01", "02"]),
-            JSON.stringify(["10", "11", "12"]),
-            JSON.stringify(["20", "21", "22"]),
-            JSON.stringify(["00", "10", "20"]),
-            JSON.stringify(["01", "11", "21"]),
-            JSON.stringify(["02", "12", "22"]),
-            JSON.stringify(["00", "11", "22"]),
-            JSON.stringify(["02", "11", "20"]),
+            ["0:0", "0:1", "0:2"],
+            ["1:0", "1:1", "1:2"],
+            ["2:0", "2:1", "2:2"],
+            ["0:0", "1:0", "2:0"],
+            ["0:1", "1:1", "2:1"],
+            ["0:2", "1:2", "2:2"],
+            ["0:0", "1:1", "2:2"],
+            ["0:2", "1:1", "2:0"],
         ];
 
         this.playerCells = [];
@@ -34,13 +34,17 @@ class Board {
     bindEvents() {
         this.el.addEventListener("click", (e) => {
             const cell = e.target.dataset["cell"];
-            console.log(cell);
+            console.log("clicked", cell, typeof cell);
             if (this.emptyCell > 1) {
                 this.selectPlayerMove(cell);
             }
         });
     }
 
+    /**
+     *
+     * @param {String} cell
+     */
     selectPlayerMove(cell) {
         const selectedCell = document.querySelector(`div[data-cell='${cell}']`);
 
@@ -72,15 +76,44 @@ class Board {
         }
     }
 
+    /**
+     *
+     * @param {Array} element
+     */
     checkWinner(element) {
-        console.log(this.winningCombinations.includes(JSON.stringify(element)));
-        return this.winningCombinations.includes(JSON.stringify(element));
+        let a = element[0];
+        let b = element[1] ? element[1] : [];
+        let c = element[2] ? element[2] : [];
+        let d = element[3] ? element[3] : [];
+
+        if (element.length >= 3) {
+            for (let i = 0; i < this.winningCombinations.length; i++) {
+                const data = this.winningCombinations[i];
+
+                console.log(
+                    data,
+                    data.includes(a),
+                    data.includes(b),
+                    data.includes(c),
+                    data.includes(d)
+                );
+
+                if (
+                    (data.includes(a) === true || data.includes(d) === true) &&
+                    (data.includes(b) === true || data.includes(d) === true) &&
+                    (data.includes(c) === true || data.includes(d) === true)
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     getHouseCell() {
         const num1 = this.generateRandomNumber();
         const num2 = this.generateRandomNumber();
-        const cell = `${num1}${num2}`;
+        const cell = `${num1}:${num2}`;
         if (
             !this.playerCells.includes(cell) &&
             !this.houseCells.includes(cell)
@@ -91,6 +124,10 @@ class Board {
         }
     }
 
+    /**
+     *
+     * @param {Number} max
+     */
     generateRandomNumber(max = 3) {
         return Math.floor(Math.random() * Math.floor(max));
     }
@@ -107,7 +144,7 @@ class Board {
                 const cols = document.createElement("div");
 
                 cols.classList.add("div-board-cols");
-                cols.dataset["cell"] = `${i}${j}`;
+                cols.dataset["cell"] = `${i}:${j}`;
 
                 rows.appendChild(cols);
             }

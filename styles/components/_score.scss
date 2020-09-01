@@ -1,0 +1,14 @@
+.header-score-container {
+    display: flex;
+    width: $board-size;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    article {
+        text-align: center;
+        padding: 1em 2em;
+
+        h3 {
+            text-transform: uppercase;
+        }
+    }
+}

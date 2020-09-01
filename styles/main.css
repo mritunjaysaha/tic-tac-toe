@@ -1,3 +1,5 @@
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+/* fallback for old browsers */
 html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -12,11 +14,43 @@ html {
 
 body {
   margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  background: radial-gradient(ellipse at top, #2c5364, #203a43, #0f2027);
 }
 
 i {
   font-size: 8em;
   color: #f00;
+}
+
+.header-score-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 34vw;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.header-score-container article {
+  text-align: center;
+  padding: 1em 2em;
+}
+
+.header-score-container article h3 {
+  text-transform: uppercase;
 }
 
 .section-board-container {
@@ -27,8 +61,10 @@ i {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 500px;
-  height: 500px;
+  width: 34vw;
+  height: 34vw;
+  border: 1px solid #ff0;
+  border-radius: 5px;
 }
 
 .div-board-rows {
@@ -44,11 +80,14 @@ i {
           flex-direction: row;
 }
 
+.div-board-rows:not(:last-child) {
+  border-bottom: 1px solid #f00;
+}
+
 .div-board-cols {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  border: 1px solid #f00;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -62,5 +101,36 @@ i {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.div-board-cols:not(:last-child) {
+  border-right: 1px solid #f00;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 5vh;
+  background: #f00;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.footer p {
+  font-size: 1em;
+  line-height: 1em;
+}
+
+.footer p a {
+  text-decoration: none;
 }
 /*# sourceMappingURL=main.css.map */

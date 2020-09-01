@@ -1,21 +1,29 @@
 .section-board-container {
     display: flex;
     flex-direction: column;
-    width: 500px;
-    height: 500px;
+    width: $board-size;
+    height: $board-size;
+    border: 1px solid #ff0;
+    border-radius: 5px;
 }
 
 .div-board-rows {
     flex: 1;
     display: flex;
     flex-direction: row;
+    &:not(:last-child) {
+        border-bottom: 1px solid #f00;
+    }
 }
 
 .div-board-cols {
     flex: 1;
-    border: 1px solid #f00;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    &:not(:last-child) {
+        border-right: 1px solid #f00;
+    }
 }

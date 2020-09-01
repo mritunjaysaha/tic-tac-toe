@@ -10,6 +10,12 @@ html {
 
 body {
     margin: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: 100vh;
+
+    background: $background-gradient;
 }
 
 i {
