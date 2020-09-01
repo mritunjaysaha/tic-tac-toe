@@ -31,4 +31,19 @@
             margin: 0;
         }
     }
+
+    .logo {
+        text-transform: uppercase;
+        background: none;
+        text-align: left;
+        color: #fafafa;
+        font-size: 1.5em;
+        padding: 0;
+        letter-spacing: 0.2em;
+        font-weight: 700;
+        // text-shadow: 1px 1px 1px $Shadow;
+        p {
+            margin: 0;
+        }
+    }
 }

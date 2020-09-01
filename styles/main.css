@@ -25,6 +25,10 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100vw;
   height: 100vh;
   background: radial-gradient(ellipse at top, #2c5364, #203a43, #0f2027);
   font-family: "Barlow Semi Condensed", sans-serif;
@@ -40,7 +44,7 @@ i {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 34vw;
+  width: 30em;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -86,6 +90,21 @@ i {
   margin: 0;
 }
 
+.header-score-container .logo {
+  text-transform: uppercase;
+  background: none;
+  text-align: left;
+  color: #fafafa;
+  font-size: 1.5em;
+  padding: 0;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
+.header-score-container .logo p {
+  margin: 0;
+}
+
 .section-board-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -94,10 +113,11 @@ i {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 34vw;
-  height: 34vw;
+  width: 30em;
+  height: 30em;
   border: 0.1em solid #606e85;
   border-radius: 5px;
+  margin-bottom: 4vh;
 }
 
 .div-board-rows {
@@ -141,8 +161,6 @@ i {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
   width: 100vw;
   height: 5vh;
   background: #16161d;
