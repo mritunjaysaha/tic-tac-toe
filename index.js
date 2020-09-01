@@ -1,10 +1,12 @@
-class Board {
-    constructor(el, rows = 3, cols = 3) {
+class TicTacToe {
+    constructor(el, userScore, houseScore, modal, btnPlayAgain) {
         this.el = document.querySelector(el);
-        this.rows = rows;
-        this.cols = cols;
-
-        this.emptyCell = 9;
+        this.rows = 3;
+        this.cols = 3;
+        this.modal = document.querySelector(modal);
+        this.userScoreEl = document.querySelector(userScore);
+        this.houseScoreEl = document.querySelector(houseScore);
+        this.btnPlayAgain = document.querySelector(btnPlayAgain);
 
         this.winningCombinations = [
             ["0:0", "0:1", "0:2"],
@@ -17,28 +19,54 @@ class Board {
             ["0:2", "1:1", "2:0"],
         ];
 
+        this.userMoves = 0;
         this.playerCells = [];
         this.houseCells = [];
+        this.foundWinner = false;
+        this.userScore = 0;
+        this.houseScore = 0;
 
+        console.log(this.userScoreEl, this.houseScoreEl);
         this.generateBoard();
         this.bindEvents();
-
-        /**
-         * TODO: 1. Decide Winner
-         * TODO: 2. Play Again Button [should appear in modal with fade animation]
-         * TODO: 3. Update scores
-         * TODO: 4. Higlight cells of the winner
-         */
     }
 
     bindEvents() {
         this.el.addEventListener("click", (e) => {
             const cell = e.target.dataset["cell"];
             console.log("clicked", cell, typeof cell);
-            if (this.emptyCell > 1) {
+            if (this.userMoves < 5 || !this.foundWinner) {
+                this.userMoves++;
+                console.log(this.userMoves);
                 this.selectPlayerMove(cell);
             }
         });
+
+        this.btnPlayAgain.addEventListener("click", () => {
+            this.modal.style.display = "none";
+            this.resetBoard();
+        });
+    }
+
+    resetBoard() {
+        this.el.innerHTML = "";
+        this.generateBoard();
+        this.userMoves = 0;
+        this.playerCells = [];
+        this.houseCells = [];
+        this.foundWinner = false;
+    }
+
+    showModal() {
+        this.modal.style.display = "flex";
+    }
+
+    updateScore() {
+        this.showModal();
+        this.userScoreEl.innerHTML =
+            this.userScore < 10 ? `0${this.userScore}` : this.userScore;
+        this.houseScoreEl.innerHTML =
+            this.houseScore < 10 ? `0${this.houseScore}` : this.houseScore;
     }
 
     /**
@@ -51,11 +79,10 @@ class Board {
         this.playerCells.push(cell);
         selectedCell.innerHTML = `<i class="uil uil-times-circle"></i>`;
 
-        this.emptyCell -= 2;
-
         if (this.checkWinner(this.playerCells)) {
             console.log("User is the winner");
-            return;
+            this.userScore++;
+            this.updateScore();
         }
 
         this.decideHouseMove();
@@ -72,7 +99,8 @@ class Board {
 
         if (this.checkWinner(this.houseCells)) {
             console.log("House is the winner");
-            return;
+            this.houseScore++;
+            this.updateScore();
         }
     }
 
@@ -99,10 +127,19 @@ class Board {
                 );
 
                 if (
-                    (data.includes(a) === true || data.includes(d) === true) &&
-                    (data.includes(b) === true || data.includes(d) === true) &&
-                    (data.includes(c) === true || data.includes(d) === true)
+                    (data.includes(a) || data.includes(d)) &&
+                    (data.includes(b) || data.includes(d)) &&
+                    (data.includes(c) || data.includes(d))
                 ) {
+                    console.log(
+                        "winner",
+                        data,
+                        data.includes(a),
+                        data.includes(b),
+                        data.includes(c),
+                        data.includes(d)
+                    );
+
                     return true;
                 }
             }
@@ -156,4 +193,10 @@ class Board {
     }
 }
 
-new Board("#board");
+new TicTacToe(
+    "#board",
+    "#player-score",
+    "#house-score",
+    "#modal",
+    "#btn-play-again"
+);
