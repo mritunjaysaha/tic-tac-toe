@@ -37,10 +37,8 @@ class TicTacToe {
             const cell = e.target.dataset["cell"];
             console.log("clicked", cell, typeof cell);
             this.selectedCells[cell] = "x";
-            if (this.selectedCells.includes("")) {
-                this.userMoves++;
-                this.selectPlayerMove(cell);
-            }
+            this.userMoves++;
+            this.selectPlayerMove(cell);
         });
 
         this.btnPlayAgain.addEventListener("click", () => {
@@ -110,7 +108,7 @@ class TicTacToe {
         const selectedCell = document.querySelector(`div[data-cell='${cell}']`);
 
         selectedCell.innerHTML = `<i class="uil uil-circle"></i>`;
-
+        this.checkWinner();
         if (this.wonBy === "o") {
             this.houseScore++;
             this.updateScore();
@@ -139,7 +137,7 @@ class TicTacToe {
 
             if (winner) {
                 this.wonBy = winner;
-            } else {
+            } else if (!this.selectedCells.includes("")) {
                 this.wonBy = "Draw";
             }
         }
