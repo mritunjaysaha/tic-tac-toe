@@ -1,5 +1,5 @@
 class TicTacToe {
-    constructor(el, userScore, houseScore, modal, btnPlayAgain) {
+    constructor(el, userScore, houseScore, modal, btnPlayAgain, winner) {
         this.el = document.querySelector(el);
         this.rows = 3;
         this.cols = 3;
@@ -7,24 +7,28 @@ class TicTacToe {
         this.userScoreEl = document.querySelector(userScore);
         this.houseScoreEl = document.querySelector(houseScore);
         this.btnPlayAgain = document.querySelector(btnPlayAgain);
+        this.winner = document.querySelector(winner);
 
         this.winningCombinations = [
-            ["0:0", "0:1", "0:2"],
-            ["1:0", "1:1", "1:2"],
-            ["2:0", "2:1", "2:2"],
-            ["0:0", "1:0", "2:0"],
-            ["0:1", "1:1", "2:1"],
-            ["0:2", "1:2", "2:2"],
-            ["0:0", "1:1", "2:2"],
-            ["0:2", "1:1", "2:0"],
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
         ];
 
+        this.selectedCells = ["", "", "", "", "", "", "", "", ""];
+        console.log(this.selectedCells);
         this.userMoves = 0;
         this.playerCells = [];
         this.houseCells = [];
         this.foundWinner = false;
         this.userScore = 0;
         this.houseScore = 0;
+        this.wonBy = "";
 
         console.log(this.userScoreEl, this.houseScoreEl);
         this.generateBoard();
@@ -35,9 +39,9 @@ class TicTacToe {
         this.el.addEventListener("click", (e) => {
             const cell = e.target.dataset["cell"];
             console.log("clicked", cell, typeof cell);
-            if (this.userMoves < 5 || !this.foundWinner) {
+            this.selectedCells[cell] = "x";
+            if (this.selectedCells.includes("")) {
                 this.userMoves++;
-                console.log(this.userMoves);
                 this.selectPlayerMove(cell);
             }
         });
@@ -50,6 +54,8 @@ class TicTacToe {
 
     resetBoard() {
         this.el.innerHTML = "";
+        this.selectedCells = ["", "", "", "", "", "", "", "", ""];
+
         this.generateBoard();
         this.userMoves = 0;
         this.playerCells = [];
@@ -67,6 +73,7 @@ class TicTacToe {
             this.userScore < 10 ? `0${this.userScore}` : this.userScore;
         this.houseScoreEl.innerHTML =
             this.houseScore < 10 ? `0${this.houseScore}` : this.houseScore;
+        this.winner.innerText = this.wonBy;
     }
 
     /**
@@ -76,13 +83,16 @@ class TicTacToe {
     selectPlayerMove(cell) {
         const selectedCell = document.querySelector(`div[data-cell='${cell}']`);
 
-        this.playerCells.push(cell);
+        this.playerCells.push(Number.parseInt(cell, 10));
         selectedCell.innerHTML = `<i class="uil uil-times-circle"></i>`;
+
+        console.log(this.checkWinner(this.playerCells));
 
         if (this.checkWinner(this.playerCells)) {
             console.log("User is the winner");
             this.userScore++;
             this.updateScore();
+            return;
         }
 
         this.decideHouseMove();
@@ -90,7 +100,7 @@ class TicTacToe {
 
     decideHouseMove() {
         const cell = this.getHouseCell();
-
+        this.selectedCells[cell] = "o";
         this.houseCells.push(cell);
 
         const selectedCell = document.querySelector(`div[data-cell='${cell}']`);
@@ -109,69 +119,55 @@ class TicTacToe {
      * @param {Array} element
      */
     checkWinner(element) {
-        let a = element[0];
-        let b = element[1] ? element[1] : [];
-        let c = element[2] ? element[2] : [];
-        let d = element[3] ? element[3] : [];
-
-        if (element.length >= 3) {
-            for (let i = 0; i < this.winningCombinations.length; i++) {
-                const data = this.winningCombinations[i];
-
-                console.log(
-                    data,
-                    data.includes(a),
-                    data.includes(b),
-                    data.includes(c),
-                    data.includes(d)
-                );
-
-                if (
-                    (data.includes(a) || data.includes(d)) &&
-                    (data.includes(b) || data.includes(d)) &&
-                    (data.includes(c) || data.includes(d))
-                ) {
-                    console.log(
-                        "winner",
-                        data,
-                        data.includes(a),
-                        data.includes(b),
-                        data.includes(c),
-                        data.includes(d)
-                    );
-
-                    return true;
-                }
+        let winner = null;
+        this.winningCombinations.forEach((combo) => {
+            if (
+                this.selectedCells &&
+                this.selectedCells[combo[0]] === this.selectedCells[combo[1]] &&
+                this.selectedCells[combo[0]] === this.selectedCells[combo[2]]
+            ) {
+                winner = this.selectedCells[combo[0]];
             }
+        });
+
+        if (winner) {
+            this.wonBy = winner === "x" ? "you won" : "house won";
+            return true;
+        } else if (this.selectedCells.includes("")) {
+            return false;
+        } else {
+            this.wonBy = "Draw";
+            return true;
         }
-        return false;
     }
 
     getHouseCell() {
-        const num1 = this.generateRandomNumber();
-        const num2 = this.generateRandomNumber();
-        const cell = `${num1}:${num2}`;
+        const cell = this.generateRandomNumber();
+        console.log(this.playerCells, this.houseCells);
+        console.log(
+            cell,
+            !this.playerCells.includes(cell) && !this.houseCells.includes(cell)
+        );
         if (
             !this.playerCells.includes(cell) &&
             !this.houseCells.includes(cell)
         ) {
             return cell;
-        } else {
-            return this.getHouseCell();
         }
+        return this.getHouseCell();
     }
 
     /**
      *
      * @param {Number} max
      */
-    generateRandomNumber(max = 3) {
+    generateRandomNumber(max = 9) {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
     generateBoard() {
         const fragment = document.createDocumentFragment();
-
+        let count = 0;
         for (let i = 0; i < this.rows; i++) {
             const rows = document.createElement("div");
 
@@ -181,8 +177,8 @@ class TicTacToe {
                 const cols = document.createElement("div");
 
                 cols.classList.add("div-board-cols");
-                cols.dataset["cell"] = `${i}:${j}`;
-
+                cols.dataset["cell"] = `${count}`;
+                count++;
                 rows.appendChild(cols);
             }
 
@@ -198,5 +194,6 @@ new TicTacToe(
     "#player-score",
     "#house-score",
     "#modal",
-    "#btn-play-again"
+    "#btn-play-again",
+    "#result"
 );
