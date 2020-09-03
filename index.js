@@ -12,11 +12,14 @@ class TicTacToe {
         this.el = document.querySelector(el);
         this.rows = 3;
         this.cols = 3;
-        this.modal = document.querySelector(modal);
+        this.modal = document.querySelector(modal.modal);
+        this.modalContents = document.querySelector(modal.contents);
         this.userScoreEl = document.querySelector(userScore);
         this.houseScoreEl = document.querySelector(houseScore);
         this.btnPlayAgain = document.querySelector(btnPlayAgain);
         this.winner = document.querySelector(winner);
+
+        console.log(this.modalContents, modal);
 
         this.winningCombinations = [
             [0, 1, 2],
@@ -62,6 +65,8 @@ class TicTacToe {
 
         this.btnPlayAgain.addEventListener("click", () => {
             this.modal.style.display = "none";
+            this.modalContents.classList.remove("bounce-top");
+
             this.resetBoard();
         });
     }
@@ -77,11 +82,15 @@ class TicTacToe {
         this.wonBy = "";
         this.winnerFound = false;
         this.playerFirst = !this.playerFirst;
+        this.houseScoreEl.classList.remove("jello-vertical");
+        this.userScoreEl.classList.remove("jello-vertical");
+
         this.changeTurns();
     }
 
     showModal() {
         this.modal.style.display = "flex";
+        this.modalContents.classList.add("bounce-top");
     }
 
     updateScore() {
@@ -89,10 +98,12 @@ class TicTacToe {
         if (this.wonBy === "x") {
             this.userScoreEl.innerHTML =
                 this.userScore < 10 ? `0${this.userScore}` : this.userScore;
+            this.userScoreEl.classList.add("jello-vertical");
             this.winner.innerText = "You won";
         } else if (this.wonBy === "o") {
             this.houseScoreEl.innerHTML =
                 this.houseScore < 10 ? `0${this.houseScore}` : this.houseScore;
+            this.houseScoreEl.classList.add("jello-vertical");
             this.winner.innerText = "House won";
         } else {
             this.winner.innerText = "Draw";
@@ -147,25 +158,25 @@ class TicTacToe {
     checkWinner() {
         let winner = null;
 
-        if (this.userMoves >= 3) {
-            this.winningCombinations.forEach((combo) => {
-                if (
-                    this.selectedCells &&
-                    this.selectedCells[combo[0]] ===
-                        this.selectedCells[combo[1]] &&
-                    this.selectedCells[combo[0]] ===
-                        this.selectedCells[combo[2]]
-                ) {
-                    winner = this.selectedCells[combo[0]];
-                }
-            });
+        if (this.userMoves < 3) {
+            return null;
+        }
 
-            if (winner) {
-                this.wonBy = winner;
-                this.winnerFound = true;
-            } else if (!this.selectedCells.includes("")) {
-                this.wonBy = "Draw";
+        this.winningCombinations.forEach((combo) => {
+            if (
+                this.selectedCells &&
+                this.selectedCells[combo[0]] === this.selectedCells[combo[1]] &&
+                this.selectedCells[combo[0]] === this.selectedCells[combo[2]]
+            ) {
+                winner = this.selectedCells[combo[0]];
             }
+        });
+
+        if (winner) {
+            this.wonBy = winner;
+            this.winnerFound = true;
+        } else if (!this.selectedCells.includes("")) {
+            this.wonBy = "Draw";
         }
     }
 
@@ -217,7 +228,10 @@ new TicTacToe(
     "#board",
     "#player-score",
     "#house-score",
-    "#modal",
+    {
+        modal: "#modal",
+        contents: "#modal-contents",
+    },
     "#btn-play-again",
     "#result"
 );
