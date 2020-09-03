@@ -1,4 +1,13 @@
 class TicTacToe {
+    /**
+     *
+     * @param {DOMElement id} el
+     * @param {DOMElement id} userScore
+     * @param {DOMElement id} houseScore
+     * @param {DOMElement id} modal
+     * @param {DOMElement id} btnPlayAgain
+     * @param {DOMElement id} winner
+     */
     constructor(el, userScore, houseScore, modal, btnPlayAgain, winner) {
         this.el = document.querySelector(el);
         this.rows = 3;
@@ -27,7 +36,7 @@ class TicTacToe {
         this.userScore = 0;
         this.houseScore = 0;
         this.wonBy = "";
-
+        this.winnerFound = false;
         this.generateBoard();
         this.bindEvents();
     }
@@ -56,6 +65,7 @@ class TicTacToe {
         this.playerCells = [];
         this.houseCells = [];
         this.wonBy = "";
+        this.winnerFound = false;
     }
 
     showModal() {
@@ -87,7 +97,7 @@ class TicTacToe {
         this.playerCells.push(Number.parseInt(cell, 10));
         selectedCell.innerHTML = `<i class="uil uil-times-circle"></i>`;
 
-        const winner = this.checkWinner();
+        this.checkWinner();
 
         if (this.wonBy === "x") {
             this.userScore++;
@@ -97,7 +107,10 @@ class TicTacToe {
         if (this.wonBy === "Draw") {
             this.updateScore();
         }
-        this.decideHouseMove();
+
+        if (!this.winnerFound) {
+            this.decideHouseMove();
+        }
     }
 
     decideHouseMove() {
@@ -137,6 +150,7 @@ class TicTacToe {
 
             if (winner) {
                 this.wonBy = winner;
+                this.winnerFound = true;
             } else if (!this.selectedCells.includes("")) {
                 this.wonBy = "Draw";
             }
