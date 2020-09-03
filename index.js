@@ -64,10 +64,13 @@ class TicTacToe {
         });
 
         this.btnPlayAgain.addEventListener("click", () => {
-            this.modal.style.display = "none";
-            this.modalContents.classList.remove("bounce-top");
-
-            this.resetBoard();
+            this.modalContents.classList.add("puff-out-center");
+            setTimeout(() => {
+                this.modal.style.display = "none";
+                this.modalContents.classList.remove("bounce-top");
+                this.resetBoard();
+                this.modalContents.classList.remove("puff-out-center");
+            }, 500);
         });
     }
 
