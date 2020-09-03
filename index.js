@@ -55,7 +55,6 @@ class TicTacToe {
     bindEvents() {
         this.el.addEventListener("click", (e) => {
             const cell = e.target.dataset["cell"];
-            console.log("clicked", cell, typeof cell);
             this.selectedCells[cell] = "x";
             this.userMoves++;
             this.selectPlayerMove(cell);
@@ -172,11 +171,7 @@ class TicTacToe {
 
     getHouseCell() {
         const cell = this.generateRandomNumber();
-        console.log(this.playerCells, this.houseCells);
-        console.log(
-            cell,
-            !this.playerCells.includes(cell) && !this.houseCells.includes(cell)
-        );
+
         if (
             !this.playerCells.includes(cell) &&
             !this.houseCells.includes(cell)

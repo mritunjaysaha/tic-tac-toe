@@ -6,6 +6,11 @@
     border: $border-width solid $HeaderOutline;
     border-radius: 5px;
     margin-bottom: 4vh;
+
+    @include respond(mobile) {
+        width: $board-size-small;
+        height: $board-size-small;
+    }
 }
 
 .div-board-rows {

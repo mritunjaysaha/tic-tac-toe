@@ -24,6 +24,10 @@ body {
 }
 
 i {
-    font-size: 8em;
+    font-size: $xo-fs;
     color: $ScoreBg;
+
+    @include respond(mobile) {
+        font-size: $xo-fs-sm;
+    }
 }
