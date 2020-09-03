@@ -37,8 +37,19 @@ class TicTacToe {
         this.houseScore = 0;
         this.wonBy = "";
         this.winnerFound = false;
+        this.playerFirst = false;
+
         this.generateBoard();
         this.bindEvents();
+    }
+
+    changeTurns() {
+        if (this.playerFirst) {
+            console.log("User first");
+        } else {
+            console.log("House first");
+            this.decideHouseMove();
+        }
     }
 
     bindEvents() {
@@ -66,6 +77,8 @@ class TicTacToe {
         this.houseCells = [];
         this.wonBy = "";
         this.winnerFound = false;
+        this.playerFirst = !this.playerFirst;
+        this.changeTurns();
     }
 
     showModal() {
