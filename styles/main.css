@@ -68,7 +68,7 @@ i {
   }
 }
 
-.header-score-container article {
+.header-score-container .header-score-contents {
   background: #f3f4f5;
   text-align: center;
   padding: 1em 0;
@@ -89,7 +89,7 @@ i {
   font-size: 1.5em;
 }
 
-.header-score-container article .score-text-player {
+.header-score-container .header-score-contents .score-text-player {
   text-transform: uppercase;
   color: #2a46c0;
   font-weight: 700;
@@ -97,14 +97,14 @@ i {
   margin: 0;
 }
 
-.header-score-container article .score {
+.header-score-container .header-score-contents .score {
   font-weight: 700;
   color: #3b4363;
   margin: 0;
 }
 
 @media only screen and (max-width: 600px) {
-  .header-score-container article {
+  .header-score-container .header-score-contents {
     font-size: 1em;
   }
 }
