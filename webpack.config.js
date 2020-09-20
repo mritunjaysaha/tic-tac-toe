@@ -13,6 +13,15 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
             module: {
                 rules: [
                     {
+                        test: /\.html$/,
+                        use: [
+                            {
+                                loader: "html-loader",
+                                options: { minimize: true },
+                            },
+                        ],
+                    },
+                    {
                         test: /\.jpe?g$/,
                         use: [
                             {
@@ -23,12 +32,22 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
                             },
                         ],
                     },
+                    {
+                        test: /\.scss$/,
+                        use: ["style-loader", "css-loader", "sass-loader"],
+                    },
                 ],
             },
             output: {
                 filename: "bundle.js",
             },
-            plugins: [new HtmlWebpackPlugin(), new webpack.ProgressPlugin()],
+            plugins: [
+                new HtmlWebpackPlugin({
+                    template: "./src/index.html",
+                    filename: "./index.html",
+                }),
+                new webpack.ProgressPlugin(),
+            ],
         },
         modeConfig(mode),
         presetConfig({ mode, presets })

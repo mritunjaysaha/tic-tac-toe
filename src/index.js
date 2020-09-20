@@ -1,3 +1,5 @@
+import "./styles/main.scss";
+
 class TicTacToe {
     /**
      *
